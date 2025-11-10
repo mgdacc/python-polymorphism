@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Presentación Interactiva: Polimorfismo en Python</title>
+    <style>
+        /* === ESTILOS GLOBALES Y DE ESCRITORIO === */
+        body {
+            font-family: Arial, sans-serif; background-color: #f0f0f0; margin: 0;
+            padding: 40px; display: flex; justify-content: center; align-items: center;
+            min-height: 100vh; box-sizing: border-box; transition: padding 0.3s ease;
+        }
+
+        .slideshow-container { position: relative; width: 90%; max-width: 960px; }
+        
+        .slide {
+            display: none; background-color: #fff; border: 1px solid #ccc;
+            height: 540px; padding: 40px 60px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            flex-direction: column; justify-content: center; position: relative;
+            box-sizing: border-box;
+        }
+
+        .fade { animation-name: fade; animation-duration: 0.5s; }
+        @keyframes fade { from {opacity: .4} to {opacity: 1} }
+
+        .prev, .next {
+            cursor: pointer; position: absolute; top: 50%; transform: translateY(-50%);
+            width: 50px; height: 50px; background-color: #cccccc; color: #333;
+            border-radius: 50%; box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            display: flex; justify-content: center; align-items: center;
+            font-weight: bold; font-size: 24px; transition: all 0.3s ease;
+            user-select: none; z-index: 10;
+        }
+
+        .prev { left: -70px; }
+        .next { right: -70px; }
+        .prev:hover, .next:hover { background-color: #aaaaaa; }
+
+        .slide h1 { font-size: 3.5em; text-align: center; border-bottom: 4px solid #11a800; padding-bottom: 20px; color: #005A9C; }
+        .slide h2 { font-size: 2.8em; margin-top: 0; margin-bottom: 30px; text-align: center; color: #005A9C; }
+        .single-content { text-align: center; }
+        .single-content p { font-size: 1.5em; color: #444; }
+        .single-content pre { font-size: 1.2em; display: inline-block; text-align: left; max-width: 100%; }
+        pre { background-color: #2d3636; color: #fff; padding: 15px; border-radius: 5px; font-size: 1.1em; white-space: pre-wrap; }
+        .footer { position: absolute; bottom: 20px; right: 40px; font-size: 1em; color: #888; }
+
+        /* === MEDIA QUERIES === */
+        @media screen and (max-width: 768px) {
+            body { padding: 15px; }
+            .slideshow-container { width: 100%; padding-bottom: 75px; }
+            .slide { height: auto; min-height: 75vh; padding: 20px 25px; }
+            .prev, .next { top: auto; bottom: 15px; width: 45px; height: 45px; }
+            .prev { left: 50%; transform: translateX(-110%); }
+            .next { left: 50%; transform: translateX(10%); right: auto; }
+            .slide h1 { font-size: 2.2em; }
+            .slide h2 { font-size: 1.8em; }
+            .single-content p { font-size: 1.1em; }
+            .single-content pre { font-size: 1em; }
+            .footer { font-size: 0.8em; right: 25px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="slideshow-container">
+        
+        <div class="slide fade">
+            <h1>Cheat Sheet de Python</h1>
+            <h2 style="color:#333; border:none;">Polimorfismo</h2>
+            <div class="footer">1 / 12</div>
+        </div>
+
+        <div class="slide fade">
+            <h2>¿Qué es el Polimorfismo?</h2>
+            <div class="single-content"><p>Del griego "muchas formas". Es la capacidad de objetos de diferentes clases de responder al mismo mensaje (llamada de método) de maneras distintas.</p></div>
+            <div class="footer">2 / 12</div>
+        </div>
+        
+        <div class="slide fade">
+            <h2>Ejemplo con Herencia</h2>
+            <div class="single-content"><p>Es la forma clásica de ver el polimorfismo. Diferentes clases hijas implementan el mismo método de la clase padre.</p></div>
+            <div class="footer">3 / 12</div>
+        </div>
+
+        <div class="slide fade">
+            <h2>Paso 1: La Clase Padre</h2>
+            <div class="single-content"><p>Creamos una clase `Animal` con un método `hablar()`.</p><pre><code>class Animal:
+    def hablar(self):
+        # Este método será sobrescrito
+        raise NotImplementedError("La subclase debe implementar este método")</code></pre></div>
+            <div class="footer">4 / 12</div>
+        </div>
+        
+        <div class="slide fade">
+            <h2>Paso 2: Las Clases Hijas</h2>
+            <div class="single-content"><p>Cada clase hija implementa `hablar()` a su manera.</p><pre><code>class Perro(Animal):
+    def hablar(self):
+        return "¡Guau!"
+
+class Gato(Animal):
+    def hablar(self):
+        return "¡Miau!"</code></pre></div>
+            <div class="footer">5 / 12</div>
+        </div>
+
+        <div class="slide fade">
+            <h2>El Polimorfismo en Acción</h2>
+            <div class="single-content"><p>Podemos tratar a todos los objetos como `Animal` y llamar al mismo método, obteniendo diferentes comportamientos.</p><pre><code>animales = [Perro(), Gato()]
+
+for animal in animales:
+    # No necesitamos saber si es un Perro o un Gato
+    print(animal.hablar())</code></pre></div>
+            <div class="footer">6 / 12</div>
+        </div>
+
+        <div class="slide fade">
+            <h2>La Filosofía de Python: Duck Typing</h2>
+            <div class="single-content"><p>"Si camina como un pato y grazna como un pato, entonces es un pato."</p><p>A Python no le importa la clase del objeto, solo si tiene el método que intentas llamar.</p></div>
+            <div class="footer">7 / 12</div>
+        </div>
+        
+        <div class="slide fade">
+            <h2>Polimorfismo sin Herencia</h2>
+            <div class="single-content"><p>Estas clases no tienen relación entre sí, pero ambas tienen un método `avanzar()`.</p><pre><code>class Coche:
+    def avanzar(self):
+        print("El coche avanza por la carretera.")
+
+class Barco:
+    def avanzar(self):
+        print("El barco avanza por el agua.")</code></pre></div>
+            <div class="footer">8 / 12</div>
+        </div>
+        
+        <div class="slide fade">
+            <h2>Duck Typing en Acción</h2>
+            <div class="single-content"><p>Esta función funciona con cualquier objeto que tenga un método `avanzar()`, sin importar su clase.</p><pre><code>def mover_vehiculo(Vehiculo):
+    Vehiculo.avanzar()
+
+mi_coche = Coche()
+mi_barco = Barco()
+
+mover_vehiculo(mi_coche)
+mover_vehiculo(mi_barco)</code></pre></div>
+            <div class="footer">9 / 12</div>
+        </div>
+        
+        <div class="slide fade">
+            <h2>Polimorfismo con Operadores</h2>
+            <div class="single-content"><p>El operador <code>+</code> es polimórfico. Se comporta de forma diferente según los tipos de datos.</p><pre><code># Para números, es suma
+print(5 + 2) # 7
+
+# Para strings, es concatenación
+print("Hola" + " " + "Mundo") # "Hola Mundo"
+
+# Para listas, es unión
+print([1, 2] + [3, 4]) # [1, 2, 3, 4]</code></pre></div>
+            <div class="footer">10 / 12</div>
+        </div>
+
+        <div class="slide fade">
+            <h2>Beneficios del Polimorfismo</h2>
+            <div class="single-content"><p>Permite escribir código más flexible y genérico, que puede trabajar con objetos de diferentes tipos sin necesidad de `if/else` para comprobar la clase de cada uno.</p></div>
+            <div class="footer">11 / 12</div>
+        </div>
+        
+        <div class="slide fade">
+            <h2>Conclusión</h2>
+            <div class="single-content"><p>El polimorfismo, especialmente a través del Duck Typing, es una de las características que hacen a Python tan flexible y dinámico.</p></div>
+            <div class="footer">12 / 12</div>
+        </div>
+
+        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+        <a class="next" onclick="plusSlides(1)">&#10095;</a>
+    </div>
+
+    <script>
+        let slideIndex = 1;
+        showSlides(slideIndex);
+
+        function plusSlides(n) {
+            showSlides(slideIndex += n);
+        }
+
+        function showSlides(n) {
+            let i;
+            let slides = document.getElementsByClassName("slide");
+            if (n > slides.length) { slideIndex = 1 } 
+            if (n < 1) { slideIndex = slides.length }
+            
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            
+            slides[slideIndex - 1].style.display = "flex";
+        }
+    </script>
+
+</body>
+</html>
